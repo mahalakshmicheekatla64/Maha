@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creamy Dreamy Bakery</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #fff8f0;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background-color: #f08080;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a.active {
+      text-decoration: underline;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .hero .welcome {
+      z-index: 1;
+      color: white;
+    }
+
+    .hero button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      background-color: #ff4d4d;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .hero button:hover {
+      background-color: #d63a3a;
+    }
+
+    section {
+      padding: 60px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    #home {
+      display: block;
+    }
+
+    /* MENU SECTION */
+    .menu-search {
+      margin-bottom: 20px;
+    }
+
+    .menu-search input {
+      width: 60%;
+      padding: 12px;
+      border: 2px solid #f08080;
+      border-radius: 30px;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .menu-search input:focus {
+      border-color: #ff9999;
+      box-shadow: 0 0 6px rgba(240, 128, 128, 0.5);
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      width: 250px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card .like-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+    }
+
+    .card .like-btn.liked {
+      color: red;
+    }
+
+    .card button.order-btn {
+      background-color: #f08080;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .card button.order-btn:hover {
+      background-color: #d66d6d;
+    }
+
+    #noResult {
+      display: none;
+      color: red;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    /* LOGIN/REGISTER SECTION */
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      background-color: #f08080;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #d66d6d;
+    }
+
+    .toggle-link {
+      color: #f08080;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+
+    /* CONTACT SECTION */
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 600px;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .contact-form {
+      max-width: 500px;
+      margin: 30px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* FEEDBACK SECTION */
+    #feedbackForm {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+
+    .stars span {
+      font-size: 30px;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .stars span.selected {
+      color: gold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f08080;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      .menu-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+      .menu-search input {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Creamy Dreamy Bakery</h1>
+  <nav>
+    <a onclick="showSection('home')" class="active">Home</a>
+    <a onclick="showSection('menu')">Menu</a>
+    <a onclick="showSection('cart')">Cart</a>
+    <a onclick="showSection('loginRegister')">Login/Register</a>
+    <a onclick="showSection('contact')">Contact</a>
+  </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="hero">
+  <video autoplay muted loop>
+    <source src="/home/user/Downloads/WhatsApp Video 2025-10-26 at 3.40.53 PM (1).mp4" type="video/mp4">
+  </video>
+  <div class="welcome">
+    <h2>Welcome to Creamy Dreamy Bakery</h2>
+    <p>Freshly baked with love — every bite, a delight!</p>
+    <button onclick="showSection('menu')">Explore Menu</button><br><br>
+    <button onclick="showSection('loginRegister')">Login / Register</button>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <h2>Our Delicious Menu</h2>
+  <div class="menu-search">
+    <input type="text" id="searchInput" placeholder="Search for bakery items..." onkeyup="searchMenu()">
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+  <p id="noResult">Out of Stock!</p>
+</section>
+
+<!-- CART -->
+<section id="cart">
+  <h2>Your Shopping Cart</h2>
+  <div id="cartItems"></div>
+  <p id="emptyCart">Your cart is empty.</p>
+  <button onclick="showSection('menu')">Continue Shopping</button><br><br>
+  <button onclick="showSection('feedback')">Proceed to Checkout</button>
+</section>
+
+<!-- FEEDBACK SECTION -->
+<section id="feedback">
+  <h2>Feedback Form</h2>
+  <div id="feedbackForm">
+    <p>Please rate your shopping experience:</p>
+    <div class="stars" id="starContainer">
+      <span onclick="rate(1)">★</span>
+      <span onclick="rate(2)">★</span>
+      <span onclick="rate(3)">★</span>
+      <span onclick="rate(4)">★</span>
+      <span onclick="rate(5)">★</span>
+    </div>
+    <form onsubmit="submitFeedback(event)">
+      <textarea id="feedbackText" placeholder="Write your feedback..." rows="4" required></textarea>
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+</section>
+
+<!-- LOGIN / REGISTER -->
+<section id="loginRegister">
+  <div class="form-container">
+    <h2 id="formTitle">Login</h2>
+    <form id="authForm" onsubmit="handleAuth(event)">
+      <input type="text" id="fullName" placeholder="Full Name" class="hidden" />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" class="hidden" />
+      <button type="submit" id="submitBtn">Login</button>
+    </form>
+    <span class="toggle-link" id="toggleText" onclick="toggleForm()">Don't have an account? Register here</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-info">
+    <p>📍 <strong>Address:</strong> 123 Dream Street, Cream City, India</p>
+    <p>📞 <strong>Phone:</strong> +91 98765 43210</p>
+    <p>📧 <strong>Email:</strong> contact@creamydreamy.com</p>
+  </div>
+
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.451533061092!2d78.48667117493563!3d17.38504490552826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9772e0b2c9a9%3A0x7cf1cba82350f1f4!2sHyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1696869703000!5m2!1sen!2sin" 
+    allowfullscreen="" loading="lazy"></iframe>
+
+  <form class="contact-form" onsubmit="submitContact(event)">
+    <input type="text" id="userName" placeholder="Your Name" required>
+    <input type="email" id="userEmail" placeholder="Your Email" required>
+    <textarea id="userMessage" placeholder="Your Message" rows="4" required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2025 Creamy Dreamy Bakery | Designed by You</p>
+</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(sec => sec.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.querySelector(`nav a[onclick="showSection('${id}')"]`)?.classList.add('active');
+  }
+
+  // LOGIN / REGISTER
+  let isLogin = true;
+  function toggleForm() {
+    isLogin = !isLogin;
+    document.getElementById('formTitle').textContent = isLogin ? "Login" : "Register";
+    document.getElementById('submitBtn').textContent = isLogin ? "Login" : "Register";
+    document.getElementById('fullName').classList.toggle('hidden', isLogin);
+    document.getElementById('confirmPassword').classList.toggle('hidden', isLogin);
+    document.getElementById('toggleText').textContent = isLogin ? "Don't have an account? Register here" : "Already have an account? Login here";
+  }
+
+  function handleAuth(event) {
+    event.preventDefault();
+    if (isLogin) {
+      alert("Login successful! Welcome back!");
+      showSection('menu');
+    } else {
+      const name = document.getElementById('fullName').value;
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirmPassword').value;
+      if (pass !== confirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+      alert(`Registration successful! Please login now.`);
+      toggleForm();
+    }
+  }
+
+  // CONTACT FORM
+  function submitContact(event) {
+    event.preventDefault();
+    const name = document.getElementById('userName').value;
+    alert(`Thank you ${name}! Your message has been received.`);
+    document.querySelector('.contact-form').reset();
+  }
+
+  // MENU + CART
+  const menuItems = [
+    {name: 'Chocolate Cake', price: 299, img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587'},
+    {name: 'Red Velvet Cupcake', price: 149, img: 'https://www.yourcupofcake.com/wp-content/uploads/2013/01/Red-Velvet-Cupcakes.jpg'},
+    {name: 'Strawberry Cake', price: 120, img: 'https://preppykitchen.com/wp-content/uploads/2022/05/Strawberry-Cake-Feature.jpg'},
+    {name: 'Black Forest Cake', price: 599, img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKprWXl9-7gWHT_L91pv2vPl4egs7EVNgusA&s'},
+    {name: 'Vanilla cake', price: 110, img: 'https://thescranline.com/wp-content/uploads/2025/02/VANILLA-CAKE-25-WEB-02-1152x1536.jpg'},
+    {name: 'Vanilla cupcake', price: 70, img: 'https://www.amytreasure.com/wp-content/uploads/2021/06/Vanilla-Cupcakes-1200-x-1200-2.jpg'},
+    {name: 'Fruit Tart', price: 180, img: 'https://www.marcellinaincucina.com/wp-content/uploads/2017/09/mini-fruit-tarts-featured.jpg'},
+    {name: 'Egg puff', price: 50, img: 'https://3.imimg.com/data3/KY/YT/MY-1714805/egg-puffs-500x500.jpg'},
+    {name: 'Curry puff', price: 40, img: 'https://www.hotbreads.co.in/cdn/shop/products/0I4A5207_1000x1000.jpg?v=1643562984'},
+    {name: 'Chiken puff', price: 60, img: 'https://i0.wp.com/foodtrails25.com/wp-content/uploads/2019/12/img_1129.jpg?fit=2048%2C1366&ssl=1'},
+    {name: 'Samosa', price: 20, img: 'https://www.shutterstock.com/image-photo/two-delicious-samosas-isolated-on-600nw-2664688917.jpg'},
+    {name:'Chokolate chip cookies',price:30,img:'https://handletheheat.com/wp-content/uploads/2020/10/BAKERY-STYLE-CHOCOLATE-CHIP-COOKIES-9-637x637-1.jpg'},
+    {name:'Bread',price:50, img:'https://media.istockphoto.com/id/1004827186/photo/sliced-bread-on-white.jpg?s=612x612&w=0&k=20&c=gMoMq9cxekB4iNS7lOToPwm6SuXh5YVu-aodVpw9C34='},
+    {name:'Biscits',price:20,img:'https://static.toiimg.com/thumb/62403305.cms?imgsize=566439&width=800&height=800'},
+    {name:'Burger',price:150,img:'https://png.pngtree.com/png-vector/20240829/ourmid/pngtree-delicious-and-testy-cheese-burger-png-image_13659847.png'},
+    {name:'Diarymilk chokolate',price:100,img:'https://www.yuvaflowers.com/cdn/shop/files/ferrero-rocher-with-dairy-milk-silk-hamper-manual-yuvaflowers-bestgifts-928-default-title-42166811492632.jpg?v=1711900706'},
+    {name:'Kunafa',price:250,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRczMghG0cq8tkMyiiZctiYk_ZTVufZzgJYlQ&s'},
+    {name:'Green dairymilk',price:300,img:'https://www.bbassets.com/media/uploads/p/l/40175826_17-cadbury-dairy-milk-silk-roast-almond-chocolate-bar.jpg'},
+    {name:'2 galaxy chocolate bar',price:500,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIRkGglp0FRq5AmVlqp7ccBVvFjOMzHOyHeQ&s'},
+    {name:'Sniker icecream',price:100,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVUSR38Xd5YGDHa0yVhTgj73-YCsfNiRJR-A&s'},
+    {name:'Rainbow icecream',price:150,img:'https://www.julieseatsandtreats.com/wp-content/uploads/2020/06/Rainbow-Ice-Cream-14-of-16-1024x1536.jpg'},
+    {name:'Banana icecream',price:150,img:'https://cdn.loveandlemons.com/wp-content/uploads/2025/06/banana-ice-cream.jpg'},
+    {name:'No-churn icecream',price:200,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN_qnZySSopHYG9PIqtCTsKximDTTh4l2DRA&s'},
+    {name:'Strawberry shortcake icecream',price:250,img:'https://www.southernliving.com/thmb/EBBY00OUG-AgOn3N1lANR0JkaFI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Strawberry_Shortcake_IceCream_010-0820b2a72950463999a5ce1723c12c2c.jpg'},
+    {name:'Sweet methai',price:300,img:'https://media.istockphoto.com/id/507796111/photo/pakistani-mithai-4.jpg?s=612x612&w=0&k=20&c=9YtvQ9huwpI_zkCH1xEzD12YbiJfiCw-L0aoaPup8Hg='},
+    {name:'Sweet snakingpick',price:250,img:'https://m.media-amazon.com/images/I/816fai3triL.jpg'},
+    {name:'Buy kaju badham',price:500,img:'https://thesweetblend.com/cdn/shop/products/badam-katli-500-grams-katli-500-grams-680044.jpg?v=1683027961'},
+    {name:'Cool drink',price:250,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvEfJO4EoYY0um0wDJf15-nocjd4bEX3XjDQ&s'},
+    {name:'Lemon stirup',price:100,img:'https://www.realsimple.com/thmb/eI_UOvO1ps6__DiUGjwu9T6qb60=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/vodka-mojito-recipe-5192553-step_05-43680e4632544c72b77d72b24f7a482e.jpg'},
+    {name:'Cocktail drink',price:150,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTC6EDywx_-kAEYa5XHQfbUM63k88xg6otyRg&s'},
+    {name:'Strawberry drink',price:350,img:'https://www.realsimple.com/thmb/Fl-N3uMETshP83SCzsB0zxeARKM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/RS0525FEABiscuits-french-75s_-6a2b00a2d592444a9201f527af8e640b.jpg'},
+    {name:'Coca cola',price:50,img:'https://gourmetmarketthailand.com/_next/image?url=https%3A%2F%2Fmedia-stark.gourmetmarketthailand.com%2Fproducts%2Fthumbnail%2F8851959132012-1-1752463270.397.webp&w=1200&q=75'},
+    {name:'Sprite',price:50,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO9KKDDsRC9i4r3ozksN6KVwJZTdtAq2F7CQ&s'},
+    {name:'Mountain dew',price:100,img:'https://images-cdn.ubuy.co.in/639e17550c4c5676de192545-new-367929-mountain-dew-can-12-oz.jpg'},
+    {name:'Icecube colour soda',price:150,img:'https://www.shutterstock.com/image-photo/fresh-iced-colorful-soda-drinks-260nw-1485143594.jpg'}
+  ];
+
+  const menuGrid = document.getElementById('menuGrid');
+  const cart = [];
+
+  menuItems.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${item.img}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>₹${item.price}</p>
+      <button class="like-btn" onclick="toggleLike(this)">♥</button>
+      <button class="order-btn" onclick="addToCart('${item.name}', ${item.price})">Order Now</button>
+    `;
+    menuGrid.appendChild(card);
+  });
+
+  function toggleLike(btn) {
+    btn.classList.toggle('liked');
+  }
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    document.getElementById('emptyCart').style.display = 'none';
+    const cartItems = document.getElementById('cartItems');
+    const item = document.createElement('p');
+    item.textContent = `${name} - ₹${price}`;
+    cartItems.appendChild(item);
+    alert(name + " added to cart!");
+  }
+
+  // SEARCH
+  function searchMenu() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.card');
+    const noResult = document.getElementById('noResult');
+    let found = false;
+    cards.forEach(card => {
+      const name = card.querySelector('h3').textContent.toLowerCase();
+      if (name.includes(input)) {
+        card.style.display = 'block';
+        found = true;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    noResult.style.display = !found && input.trim() !== "" ? 'block' : 'none';
+  }
+
+  // FEEDBACK
+  let selectedRating = 0;
+  function rate(num) {
+    selectedRating = num;
+    document.querySelectorAll('#starContainer span').forEach((s, i) => {
+      s.classList.toggle('selected', i < num);
+    });
+  }
+
+  function submitFeedback(event) {
+    event.preventDefault();
+    const text = document.getElementById('feedbackText').value;
+    alert(`Thank you for your feedback!\nRating: ${selectedRating} stars\nMessage: ${text}`);
+    document.getElementById('feedbackText').value = '';
+    document.querySelectorAll('#starContainer span').forEach(s => s.classList.remove('selected'));
+    showSection('home');
+  }
+</script>
+</body>
+</html>
